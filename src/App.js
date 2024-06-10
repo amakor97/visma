@@ -5,6 +5,9 @@ import InfoList from "./components/cards/list/InfoList";
 import MoreButton from "./components/buttons/more/MoreButton";
 import LinksList from "./components/links/LinksList";
 
+import { useState } from "react";
+import SelectSort from "./components/inputs/SelectSort/SelectSort";
+
 const services = [
     {type: "услуги", description: "H.Lorem ipsum dolor sit amet."},
     {type: "услуги", description: "F.Lorem ipsum dolor sit amet."},
@@ -45,7 +48,16 @@ const grid = {
     gridGap: "20px"
 }
 
+const sortOptions = ["none", "alphabet"];
+
+
 function App() {
+    const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
+
+    function handleSortSelect(e) {
+        setSelectedSort(e.target.value);
+        console.log(selectedSort);
+    }
 
     return (
         <div>
@@ -60,6 +72,7 @@ function App() {
             <Section gridStyle={grid}>
                 <InfoBlock title={mainContentSection.title}
                            content={mainContentSection.content}>
+                    <SelectSort options={sortOptions} onOptionChange={handleSortSelect}/>
                     <LinksList/>
                 </InfoBlock>
                 <InfoList data={services} gridStyle={grid}/>

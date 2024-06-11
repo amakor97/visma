@@ -17,6 +17,8 @@ const services = [
     {type: "услуги", description: "A.Lorem ipsum dolor sit amet."},
 ]
 
+const data = [...services];
+
 // данные для Section - банер
 const bannerSection = {
     title: {
@@ -59,6 +61,34 @@ function App() {
         console.log(selectedSort);
     }
 
+    const [dataState, setDataState] = useState(data);
+
+    console.log(services, data, dataState);
+
+    function handleSort(e) {
+        console.log(e.target.value);
+        const dataCopy = JSON.parse(JSON.stringify(dataState));
+        console.log(typeof(dataCopy));
+        console.log(dataCopy);
+        if (e.target.value === "none") {
+            setDataState(data);
+        } else {
+            console.log(dataCopy);
+            dataCopy.forEach(element => {
+                console.log(element.description);
+            });
+
+            dataCopy.sort((a, b) => a.description.localeCompare(b.description));
+            dataCopy.forEach(element => {
+                console.log(element.description);
+            });
+
+            setDataState(dataCopy);
+        }
+
+    }
+
+
     return (
         <div>
             <Section gridStyle={grid}>
@@ -72,10 +102,10 @@ function App() {
             <Section gridStyle={grid}>
                 <InfoBlock title={mainContentSection.title}
                            content={mainContentSection.content}>
-                    <SelectSort options={sortOptions} onOptionChange={handleSortSelect}/>
+                    <SelectSort options={sortOptions} onOptionChange={handleSort}/>
                     <LinksList/>
                 </InfoBlock>
-                <InfoList data={services} sortType={selectedSort} gridStyle={grid}/>
+                <InfoList data={dataState} sortType={selectedSort} gridStyle={grid}/>
             </Section>
         </div>
     );

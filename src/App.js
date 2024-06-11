@@ -17,8 +17,6 @@ const services = [
     {type: "услуги", description: "A.Lorem ipsum dolor sit amet."},
 ]
 
-const data = [...services];
-
 // данные для Section - банер
 const bannerSection = {
     title: {
@@ -50,42 +48,27 @@ const grid = {
     gridGap: "20px"
 }
 
-const sortOptions = ["none", "alphabet"];
+const sortOptions = ["None", "Alphabet"];
 
 
 function App() {
-    const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
-
-    function handleSortSelect(e) {
-        setSelectedSort(e.target.value);
-        console.log(selectedSort);
-    }
-
-    const [dataState, setDataState] = useState(data);
-
-    console.log(services, data, dataState);
+    const [dataState, setDataState] = useState(services);
 
     function handleSort(e) {
-        console.log(e.target.value);
+        const sortType = e.target.value;
         const dataCopy = JSON.parse(JSON.stringify(dataState));
-        console.log(typeof(dataCopy));
-        console.log(dataCopy);
-        if (e.target.value === "none") {
-            setDataState(data);
-        } else {
-            console.log(dataCopy);
-            dataCopy.forEach(element => {
-                console.log(element.description);
-            });
 
-            dataCopy.sort((a, b) => a.description.localeCompare(b.description));
-            dataCopy.forEach(element => {
-                console.log(element.description);
-            });
-
-            setDataState(dataCopy);
+        switch(sortType) {
+            case "Alphabet": {
+                dataCopy.sort((a, b) => a.description.localeCompare(b.description));
+                setDataState(dataCopy);
+                break;
+            }
+            default: {
+                setDataState(services);
+                break;
+            }
         }
-
     }
 
 
@@ -105,7 +88,7 @@ function App() {
                     <SelectSort options={sortOptions} onOptionChange={handleSort}/>
                     <LinksList/>
                 </InfoBlock>
-                <InfoList data={dataState} sortType={selectedSort} gridStyle={grid}/>
+                <InfoList data={dataState} gridStyle={grid}/>
             </Section>
         </div>
     );

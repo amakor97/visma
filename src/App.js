@@ -75,7 +75,7 @@ function App() {
                     <SelectSort options={sortOptions} onOptionChange={handleSortSelect}/>
                     <LinksList/>
                 </InfoBlock>
-                <InfoList data={services} gridStyle={grid}/>
+                <InfoList data={services} sortType={selectedSort} gridStyle={grid}/>
             </Section>
         </div>
     );
